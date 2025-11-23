@@ -14,7 +14,12 @@ namespace Tyuiu.LavrentevVA.Sprint5.Task2.V23
         {
             DataService ds = new DataService();
 
-            int [,] matrix = new int[3, 3];
+            int[,] matrix = new int[3, 3]
+            {
+                {3, 8, 4},
+                {-5, -4, -3},
+                {-9, 0, 2}
+            };
 
             int rows = matrix.GetUpperBound(0) + 1;
             int columns = matrix.Length / rows;
