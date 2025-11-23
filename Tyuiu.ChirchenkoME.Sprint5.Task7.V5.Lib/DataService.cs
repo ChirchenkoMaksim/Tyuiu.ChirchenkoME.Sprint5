@@ -1,4 +1,7 @@
-﻿using tyuiu.cources.programming.interfaces.Sprint5;
+﻿using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using tyuiu.cources.programming.interfaces.Sprint5;
 namespace Tyuiu.ChirchenkoME.Sprint5.Task7.V5.Lib
 {
     public class DataService : ISprint5Task7V5
@@ -9,8 +12,14 @@ namespace Tyuiu.ChirchenkoME.Sprint5.Task7.V5.Lib
             string content = File.ReadAllText(path);
             char[] resultChars = content.Where(c => !((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))).ToArray();
             string result = new string(resultChars);
+
+            // Remove spaces that appear directly before punctuation (.,!?:;) and collapse multiple spaces, then trim
+            string cleaned = Regex.Replace(result, @"\s+([.,!?:;])", "$1");
+            cleaned = Regex.Replace(cleaned, @" {2,}", " ");
+            cleaned = cleaned.Trim();
+
             string outputPath = Path.Combine(Path.GetTempPath(), "OutPutDataFileTask7V5.txt");
-            File.WriteAllText(outputPath, result);
+            File.WriteAllText(outputPath, cleaned);
             return outputPath;
         }
     }
